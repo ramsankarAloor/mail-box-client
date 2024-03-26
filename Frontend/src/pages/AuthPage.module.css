@@ -20,6 +20,13 @@
   background-color: transparent;
   border: none;
 }
+.error {
+  border-color: #f44336; /* Red border color */
+  box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25); /* Red box shadow */
+}
+.error-text{
+  color: #f44336;
+}
 .s-button {
   height: 3rem;
   font-size: larger;
