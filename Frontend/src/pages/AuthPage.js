@@ -6,6 +6,7 @@ import { BASE_URL } from "../config";
 
 const baseurl = BASE_URL;
 const signupUrl = `${baseurl}/auth/signup`;
+const loginUrl = `${baseurl}/auth/login`;
 
 const AuthPage = () => {
   const emailRef = useRef();
@@ -14,6 +15,7 @@ const AuthPage = () => {
   const [login, setLogin] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
   const [passmatch, setPassmatch] = useState(true);
+  const [wrongPass, setWrongpass] = useState(false)
 
   function switchAuth() {
     setLogin((prevState) => !prevState);
@@ -35,9 +37,25 @@ const AuthPage = () => {
       return;
     }
 
-    setValidEmail(validateEmail(email));
+    if (!validateEmail(email)) {
+      setValidEmail(validateEmail(email));
+      return;
+    }
 
     if (login) {
+      const reqBody = { email, password };
+      try {
+        const response = await axios.post(loginUrl, reqBody);
+        localStorage.setItem("token", response.data.token);
+        alert(response.data.message);
+      } catch (error) {
+        if(error.response.status===401){
+          setWrongpass(true)
+        }else{
+          alert(error.response.data.error)
+          setWrongpass(false)
+        }
+      }
     } else {
       const confirmPassword = conPassRef.current.value;
       if (confirmPassword.trim() === "") {
@@ -56,9 +74,11 @@ const AuthPage = () => {
         const response = await axios.post(signupUrl, reqBody);
         alert(response.data.message);
       } catch (error) {
-        console.log(error.response.data.error)
+        if(error.response.status===403){
+          alert(error.response.data.error)
+        }
       }
-    }
+    } 
   }
 
   return (
@@ -81,7 +101,7 @@ const AuthPage = () => {
         </div>
         <div className="form-floating">
           <input
-            className="form-control"
+            className={`form-control ${wrongPass && login ? styles.error : ""}`}
             type="password"
             required
             placeholder="password"
@@ -89,6 +109,9 @@ const AuthPage = () => {
             ref={passRef}
           ></input>
           <label htmlFor="password">Password</label>
+          {(login && wrongPass) && (
+            <span className={styles["error-text"]}>*Wrong password</span>
+          )}
         </div>
         {!login && (
           <div className="form-floating">
