@@ -5,6 +5,7 @@ import { BASE_URL } from "../config";
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styles from "./AuthPage.module.css";
+import { authActions } from "../store/auth";
 
 const baseurl = BASE_URL;
 const signupUrl = `${baseurl}/auth/signup`;
@@ -50,7 +51,7 @@ const AuthPage = () => {
       try {
         const response = await axios.post(loginUrl, reqBody);
         localStorage.setItem("token", response.data.token);
-        dispatch({token : response.data.token})
+        dispatch(authActions.login({token : response.data.token}))
         history.replace('/home')
       } catch (error) {
         if(error.response.status===401){

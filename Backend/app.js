@@ -10,8 +10,10 @@ app.use(cors());
 app.use(express.json());
 
 const authRoutes = require('./routes/auth')
+const mailRoutes = require('./routes/mail')
 
 app.use("/auth", authRoutes);
+app.use("/mail", mailRoutes); 
 
 sequelize
   .sync()
