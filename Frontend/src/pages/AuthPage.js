@@ -1,8 +1,10 @@
 import { Button, Card } from "react-bootstrap";
-import styles from "./AuthPage.module.css";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../config";
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import styles from "./AuthPage.module.css";
 
 const baseurl = BASE_URL;
 const signupUrl = `${baseurl}/auth/signup`;
@@ -17,11 +19,12 @@ const AuthPage = () => {
   const [passmatch, setPassmatch] = useState(true);
   const [wrongPass, setWrongpass] = useState(false)
 
+  const history = useHistory()
+  const dispatch = useDispatch()
+
   function switchAuth() {
     setLogin((prevState) => !prevState);
   }
-
-  function forgotPasswordHandler() {}
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +50,8 @@ const AuthPage = () => {
       try {
         const response = await axios.post(loginUrl, reqBody);
         localStorage.setItem("token", response.data.token);
-        alert(response.data.message);
+        dispatch({token : response.data.token})
+        history.replace('/home')
       } catch (error) {
         if(error.response.status===401){
           setWrongpass(true)
@@ -130,14 +134,6 @@ const AuthPage = () => {
               </span>
             )}
           </div>
-        )}
-        {login && (
-          <button
-            className={styles["blue-link"]}
-            onClick={forgotPasswordHandler}
-          >
-            Forgot password?
-          </button>
         )}
         <Button className={styles["s-button"]} onClick={sendAuthApi}>
           {login ? "Login" : "Signup"}
