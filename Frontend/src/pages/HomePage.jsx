@@ -3,35 +3,33 @@ import ComposeMail from "../components/ComposeMail";
 import styles from "./HomePage.module.css";
 import { Button } from "react-bootstrap";
 import Inbox from "../components/Inbox";
+import SentMails from "../components/SentMails";
 function HomePage() {
   const [composeMail, setComposeMail] = useState(false);
   const [inboxOpen, setInboxOpen] = useState(false);
-  const [sentMailOpen, setSentMailOpen] = useState(false)
+  const [sentMailOpen, setSentMailOpen] = useState(false);
 
-  function composeHandler(){
+  function composeHandler() {
     setComposeMail(true);
-    setSentMailOpen(false)
+    setSentMailOpen(false);
     setInboxOpen(false);
   }
 
   function inboxHandler() {
     setComposeMail(false);
-    setSentMailOpen(false)
+    setSentMailOpen(false);
     setInboxOpen(true);
   }
-  function sentMailsHandler(){
+  function sentMailsHandler() {
     setComposeMail(false);
-    setSentMailOpen(true)
     setInboxOpen(false);
+    setSentMailOpen(true);
   }
   return (
     <div className={styles["full-size"]}>
       <div className={styles["left-part"]}>
         <div className={styles["sections"]}>
-          <Button
-            variant="outline-primary"
-            onClick={composeHandler}
-          >
+          <Button variant="outline-primary" onClick={composeHandler}>
             + Compose
           </Button>
         </div>
@@ -45,7 +43,7 @@ function HomePage() {
           </button>
         </div>
         <div className={styles["sections"]}>
-        <button
+          <button
             variant="outline-secondary"
             className={styles["borderless-button"]}
             onClick={sentMailsHandler}
@@ -57,6 +55,7 @@ function HomePage() {
       <div className={`container ${styles["right-part"]}`}>
         {composeMail && <ComposeMail />}
         {inboxOpen && <Inbox />}
+        {sentMailOpen && <SentMails/>}
       </div>
     </div>
   );

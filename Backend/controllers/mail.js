@@ -32,3 +32,17 @@ exports.getMails = async (req, res) => {
     res.status(500).json({error : 'server side error in getting inbox'})
   }
 }
+
+exports.getSentMails = async (req, res) => {
+  try {
+    const fromId = req.userId
+    const sentMails = await Mail.findAll({
+      where: {fromId},
+      include: [{model : User, as: 'to', attributes: ['email']}],
+      attributes: ['content', 'subject']
+    })
+    res.status(200).json(sentMails)
+  } catch (error) {
+    res.status(500).json({error : 'server side error in getting sent emails'})
+  }
+}

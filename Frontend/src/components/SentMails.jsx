@@ -2,34 +2,34 @@ import { useEffect } from "react";
 import classes from "./Inbox.module.css";
 import axios from "axios";
 import { BASE_URL } from "../config";
+import { sentMailsActions } from "../store/sentMails";
 import { useDispatch, useSelector } from "react-redux";
-import { mailsActions } from "../store/mails";
 
 const baseurl = BASE_URL;
-const getMailsUrl = `${baseurl}/mail/get-mails`;
+const getSentMailsUrl = `${baseurl}/mail/sent-mails`;
 
-function Inbox() {
-  const dispatch = useDispatch();
-  const mails = useSelector((state) => state.mails.mails);
-
+function SentMails() {
+  const dispatch = useDispatch()
+  const sentMails = useSelector((state) => state.sentMails.sentMails);
+  
   useEffect(() => {
-    async function getMails() {
+    async function getSentMails() {
       const token = localStorage.getItem("token");
-      const response = await axios.get(getMailsUrl, {
+      const response = await axios.get(getSentMailsUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(mailsActions.getMails(response.data));
+      dispatch(sentMailsActions.getSentMails(response.data));
     }
-    getMails();
+    getSentMails()
   }, []);
 
-  const mailsList = mails.map((mail, index) => {
+  const sentMailsList = sentMails.map((mail, index) => {
     return (
       <tr key={index}>
         <td className={classes["w30"]}>
-          <strong>{mail.from.email}</strong>
+          <strong>{mail.to.email}</strong>
         </td>
         <td className={classes["w70"]}>
           <strong>{mail.subject}</strong> - {mail.content}
@@ -41,9 +41,10 @@ function Inbox() {
   return (
     <table className="table">
       <tbody>
-        {mailsList}
+        {sentMailsList}
       </tbody>
     </table>
   );
 }
-export default Inbox;
+
+export default SentMails;

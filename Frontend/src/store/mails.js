@@ -8,7 +8,7 @@ const mailsSlice = createSlice({
     reducers : {
         getMails(state, action){
             state.mails = action.payload
-        }
+        },
     }
 })
 export const mailsActions =  mailsSlice.actions
