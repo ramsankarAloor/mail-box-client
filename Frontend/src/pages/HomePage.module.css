@@ -1,4 +1,31 @@
 .full-size{
     width: 100vw;
     height: 100vh;
+    display: flex;
+}
+.left-part{
+    width: 15%;
+    height: 100%;
+    padding-top: 2rem;
+}
+.right-part{
+    width: 80%;
+    height: 100%;
+    padding-top: 2rem;
+}
+.sections{
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.borderless-button{
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    height: 3rem;
+    background-color: transparent;
+}
+.borderless-button:hover{
+    background-color: #d9d5d56b;
 }

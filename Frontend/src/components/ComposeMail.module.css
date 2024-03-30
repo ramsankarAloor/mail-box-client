@@ -1,0 +1,11 @@
+.button-div{
+    display: flex;
+    justify-content: end;
+    height: 3rem;
+    align-items: center;
+    background-color: #d9d5d56b;
+    padding-right: 1.5rem;
+}   
+.send-button{
+    width: 6rem;
+}

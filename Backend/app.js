@@ -11,9 +11,14 @@ app.use(express.json());
 
 const authRoutes = require('./routes/auth')
 const mailRoutes = require('./routes/mail')
+const Mail = require('./models/mail')
+const User = require('./models/user')
 
 app.use("/auth", authRoutes);
 app.use("/mail", mailRoutes); 
+
+Mail.belongsTo(User, { foreignKey: 'fromId', as: 'from'});
+Mail.belongsTo(User, { foreignKey: 'toId', as: 'to'});
 
 sequelize
   .sync()

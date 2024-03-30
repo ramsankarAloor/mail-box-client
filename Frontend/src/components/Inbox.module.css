@@ -1,0 +1,12 @@
+.w30 {
+  width: 30%;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any content that overflows the div */
+  text-overflow: ellipsis; /* Show an ellipsis (...) for overflow text */
+}
+.w70 {
+  width: 70%;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any content that overflows the div */
+  text-overflow: ellipsis; /* Show an ellipsis (...) for overflow text */
+}

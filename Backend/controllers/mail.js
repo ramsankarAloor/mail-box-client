@@ -1,3 +1,4 @@
+const { Model } = require("sequelize");
 const Mail = require("../models/mail");
 const User = require("../models/user");
 
@@ -17,3 +18,17 @@ exports.postMail = async (req, res) => {
     res.status(500).json({ error : "server side error in sending mail"})
   }
 };
+
+exports.getMails = async (req, res) => {
+  try {
+    const toId = req.userId
+    const mails = await Mail.findAll({
+      where: {toId},
+      include: [{model : User, as: 'from', attributes: ['email']}],
+      attributes : ['content', 'subject']
+    })
+    res.status(200).json(mails)
+  } catch (error) {
+    res.status(500).json({error : 'server side error in getting inbox'})
+  }
+}
