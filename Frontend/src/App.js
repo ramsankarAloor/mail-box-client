@@ -10,13 +10,10 @@ function App() {
     <>
       <Switch>
         <Route path="/" exact>
-          {isLoggedIn ? <Redirect to="/home" /> : <Redirect to="/auth" />}
+          {isLoggedIn ? <HomePage /> : <Redirect to="/auth" />}
         </Route>
         <Route path="/auth">
-          {isLoggedIn ? <Redirect to='/home' />: <AuthPage />}
-        </Route>
-        <Route path="/home">
-          {isLoggedIn ? <HomePage /> : <Redirect to='/auth' />}
+          {isLoggedIn ? <Redirect to='/' />: <AuthPage />}
         </Route>
       </Switch>
     </>
