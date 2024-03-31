@@ -9,9 +9,9 @@ const baseurl = BASE_URL;
 const getSentMailsUrl = `${baseurl}/mail/sent-mails`;
 
 function SentMails() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const sentMails = useSelector((state) => state.sentMails.sentMails);
-  
+
   useEffect(() => {
     async function getSentMails() {
       const token = localStorage.getItem("token");
@@ -22,29 +22,27 @@ function SentMails() {
       });
       dispatch(sentMailsActions.getSentMails(response.data));
     }
-    getSentMails()
+    getSentMails();
   }, []);
 
   const sentMailsList = sentMails.map((mail, index) => {
     return (
-      <tr key={index}>
-        <td className={classes["w30"]}>
-          <strong>{mail.to.email}</strong>
-        </td>
-        <td className={classes["w70"]}>
-          <strong>{mail.subject}</strong> - {mail.content}
-        </td>
-      </tr>
+      <div key={index} className={classes["table-row"]}>
+        <div className={classes.w30}>
+          <div className={classes["text-wrapper"]}>
+            <strong>{mail.to.email}</strong>
+          </div>
+        </div>
+        <div className={classes.w70}>
+          <div className={classes["text-wrapper"]}>
+            <strong>{mail.subject}</strong> - {mail.content}
+          </div>
+        </div>
+      </div>
     );
   });
 
-  return (
-    <table className="table">
-      <tbody>
-        {sentMailsList}
-      </tbody>
-    </table>
-  );
+  return <div className={classes["table-wrapper"]}>{sentMailsList}</div>;
 }
 
 export default SentMails;

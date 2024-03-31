@@ -20,6 +20,7 @@ function Inbox() {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data);
       dispatch(mailsActions.getMails(response.data));
     }
     getMails();
@@ -27,23 +28,22 @@ function Inbox() {
 
   const mailsList = mails.map((mail, index) => {
     return (
-      <tr key={index}>
-        <td className={classes["w30"]}>
-          <strong>{mail.from.email}</strong>
-        </td>
-        <td className={classes["w70"]}>
-          <strong>{mail.subject}</strong> - {mail.content}
-        </td>
-      </tr>
+      <div key={index} className={classes["table-row"]}>
+        <div className={classes.w30}>
+          <div className={classes["text-wrapper"]}>
+            <span className={classes["blue-dot"]}></span>
+            <strong>{mail.from.email}</strong>
+          </div>
+        </div>
+        <div className={classes.w70}>
+          <div className={classes["text-wrapper"]}>
+            <strong>{mail.subject}</strong> - {mail.content}
+          </div>
+        </div>
+      </div>
     );
   });
 
-  return (
-    <table className="table">
-      <tbody>
-        {mailsList}
-      </tbody>
-    </table>
-  );
+  return <div className={classes["table-wrapper"]}>{mailsList}</div>;
 }
 export default Inbox;

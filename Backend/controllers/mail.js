@@ -25,7 +25,7 @@ exports.getMails = async (req, res) => {
     const mails = await Mail.findAll({
       where: {toId},
       include: [{model : User, as: 'from', attributes: ['email']}],
-      attributes : ['content', 'subject']
+      attributes : ['content', 'subject', 'read', 'id']
     })
     res.status(200).json(mails)
   } catch (error) {
@@ -39,7 +39,7 @@ exports.getSentMails = async (req, res) => {
     const sentMails = await Mail.findAll({
       where: {fromId},
       include: [{model : User, as: 'to', attributes: ['email']}],
-      attributes: ['content', 'subject']
+      attributes: ['content', 'subject', 'id']
     })
     res.status(200).json(sentMails)
   } catch (error) {

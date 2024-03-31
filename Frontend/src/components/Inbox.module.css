@@ -1,12 +1,32 @@
 .w30 {
   width: 30%;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide any content that overflows the div */
-  text-overflow: ellipsis; /* Show an ellipsis (...) for overflow text */
+  display: flex;
+  align-items: center;
 }
 .w70 {
   width: 70%;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide any content that overflows the div */
-  text-overflow: ellipsis; /* Show an ellipsis (...) for overflow text */
+  display: flex;
+  align-items: center;
+}
+.text-wrapper {
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.table-row {
+  width: 100%;
+  height: 2.5rem;
+  border-bottom: 1px solid #d9d5d56b;
+  display: flex;
+}
+.table-wrapper {
+  width: 100%;
+}
+.blue-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  border-radius: 50%; /* Makes the element a circle */
 }

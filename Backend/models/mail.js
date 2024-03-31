@@ -21,6 +21,10 @@ const Mail = sequelize.define('mail', {
     },
     content: {
         type: DataTypes.STRING,
+    },
+    read: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 
