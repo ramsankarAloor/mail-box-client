@@ -13,10 +13,10 @@ function App() {
           {isLoggedIn ? <Redirect to="/home" /> : <Redirect to="/auth" />}
         </Route>
         <Route path="/auth">
-          <AuthPage />
+          {isLoggedIn ? <Redirect to='/home' />: <AuthPage />}
         </Route>
         <Route path="/home">
-          <HomePage />
+          {isLoggedIn ? <HomePage /> : <Redirect to='/auth' />}
         </Route>
       </Switch>
     </>
