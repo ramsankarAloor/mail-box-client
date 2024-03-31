@@ -24,14 +24,16 @@
   justify-content: center;
   align-items: center;
 }
-.borderless-button {
+.for-nav-link {
   width: 100%;
-  border-radius: 0;
-  border: none;
   height: 3rem;
-  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
 }
-.borderless-button:hover {
+.for-nav-link:hover {
   background-color: #d9d5d56b;
 }
 .selected {
