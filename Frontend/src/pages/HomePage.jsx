@@ -58,6 +58,9 @@ function HomePage() {
           <Route path={`${match.path}/inbox`}>
             <Inbox />
           </Route>
+          <Route path={`${match.path}/sent/:id`}>
+            <OpenedMail />
+          </Route>
           <Route path={`${match.path}/sent`}>
             <SentMails />
           </Route>

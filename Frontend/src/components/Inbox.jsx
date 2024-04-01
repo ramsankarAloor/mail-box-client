@@ -27,30 +27,39 @@ function Inbox() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       dispatch(mailsActions.getMails(response.data));
     }
     getMails();
   }, []);
 
   const mailsList = mails.map((mail, index) => {
-    function openMail() {
-      dispatch(openMailActions.openMail(mail))
+    async function openMail() {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.put(`${getMailsUrl}/${mail.id}`,{}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      dispatch(openMailActions.openMail(mail));
       history.push(`${match.url}/${mail.id}`);
     }
     return (
       <div key={index} className={classes["table-row"]} onClick={openMail}>
-          <div className={classes.w30}>
-            <div className={classes["text-wrapper"]}>
-              <span className={classes["blue-dot"]}></span>
-              <strong>{mail.from.email}</strong>
-            </div>
+        <div className={classes.w30}>
+          <div className={classes["text-wrapper"]}>
+            {!mail.read && <span className={classes["blue-dot"]}></span>}
+            <strong>{mail.from.email}</strong>
           </div>
-          <div className={classes.w70}>
-            <div className={classes["text-wrapper"]}>
-              <strong>{mail.subject}</strong> - {mail.content}
-            </div>
+        </div>
+        <div className={classes.w70}>
+          <div className={classes["text-wrapper"]}>
+            <strong>{mail.subject}</strong> - {mail.content}
           </div>
+        </div>
       </div>
     );
   });

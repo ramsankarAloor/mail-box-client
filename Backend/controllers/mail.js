@@ -46,3 +46,16 @@ exports.getSentMails = async (req, res) => {
     res.status(500).json({error : 'server side error in getting sent emails'})
   }
 }
+
+exports.readMail = async (req, res) => {
+  const id = req.params.id
+  try {
+    await Mail.update(
+      { read : true },
+      {where: {id : id}}
+    )
+    res.status(200).json({message : 'mail read'})
+  } catch (error) {
+    res.status(500).json({error : 'server side error to make mail read.'})
+  }
+}
