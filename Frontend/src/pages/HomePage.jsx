@@ -4,10 +4,11 @@ import styles from "./HomePage.module.css";
 import { Button } from "react-bootstrap";
 import Inbox from "../components/Inbox";
 import SentMails from "../components/SentMails";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/auth";
 import { Route } from "react-router-dom";
 import { NavLink, Redirect, Switch, useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
+import OpenedMail from "../components/OpenedMail";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -27,12 +28,12 @@ function HomePage() {
             </NavLink>
           </div>
           <div className={styles["sections"]}>
-            <NavLink to={`${match.path}/inbox`} className={styles["for-nav-link"]}>
+            <NavLink to={`${match.path}/inbox`} className={styles["for-nav-link"]} activeClassName={styles.selected}>
               Inbox
             </NavLink>
           </div>
           <div className={styles["sections"]}>
-            <NavLink to={`${match.path}/sent`} className={styles["for-nav-link"]}>
+            <NavLink to={`${match.path}/sent`} className={styles["for-nav-link"]} activeClassName={styles.selected}>
               Sent
             </NavLink>
           </div>
@@ -45,8 +46,14 @@ function HomePage() {
       </div>
       <div className={`container ${styles["right-part"]}`}>
         <Switch>
+          <Route exact path={`${match.path}/`}>
+            <Redirect to={`${match.path}/inbox`} />
+          </Route>
           <Route path={`${match.path}/compose`}>
             <ComposeMail />
+          </Route>
+          <Route path={`${match.path}/inbox/:id`}>
+            <OpenedMail />
           </Route>
           <Route path={`${match.path}/inbox`}>
             <Inbox />

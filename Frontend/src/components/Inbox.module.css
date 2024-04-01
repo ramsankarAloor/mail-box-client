@@ -19,6 +19,10 @@
   height: 2.5rem;
   border-bottom: 1px solid #d9d5d56b;
   display: flex;
+  cursor: pointer;
+}
+.table-row:hover{
+  background-color: #d9d5d56b;
 }
 .table-wrapper {
   width: 100%;
