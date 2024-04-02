@@ -8,6 +8,16 @@
   display: flex;
   align-items: center;
 }
+.w10 {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.text-body{
+  display: flex;
+  width: 90%;
+}
 .text-wrapper {
   width: 100%;
   white-space: nowrap;
@@ -33,4 +43,11 @@
   height: 10px;
   background-color: blue;
   border-radius: 50%; /* Makes the element a circle */
+}
+.delete-button{
+  background-color: transparent;
+  border: none;
+}
+.delete-button:hover{
+  background-color: red;
 }
