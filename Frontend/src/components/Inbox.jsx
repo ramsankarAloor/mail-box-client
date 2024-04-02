@@ -39,11 +39,11 @@ function Inbox() {
         dispatch(mailsActions.setUnread(unreadNum));
       }
       getMails();
-    }, 2000); // polling in every 2 seconds.
+    }, 2000); 
 
-    // Clear the interval on component unmount to prevent memory leaks
+    // Clear the interval on component unmount 
     return () => clearInterval(intervalId);
-  }, [dispatch]); // Dependency array should not include `mails` to prevent infinite loop
+  }, [dispatch]); 
 
   const mailsList = mails.map((mail, index) => {
     async function openMail() {

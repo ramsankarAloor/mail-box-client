@@ -26,6 +26,7 @@ exports.getMails = async (req, res) => {
       where: { toId },
       include: [{ model: User, as: "from", attributes: ["email"] }],
       attributes: ["content", "subject", "read", "id"],
+      order: [["id", "DESC"]]
     });
     res.status(200).json(mails);
   } catch (error) {
@@ -40,6 +41,7 @@ exports.getSentMails = async (req, res) => {
       where: { fromId },
       include: [{ model: User, as: "to", attributes: ["email"] }],
       attributes: ["content", "subject", "id"],
+      order: [["id", "DESC"]]
     });
     res.status(200).json(sentMails);
   } catch (error) {
