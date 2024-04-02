@@ -37,6 +37,10 @@ export default function ComposeMail() {
     } catch (error) {
       alert(error.response.data.error);
     }
+
+    toEmail.current.value = ''
+    subject.current.value =  ''
+    setEditorState(EditorState.createEmpty())
   }
 
   return (
