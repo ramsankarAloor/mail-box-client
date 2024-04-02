@@ -6,6 +6,7 @@ import { sentMailsActions } from "../store/sentMails";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
 import { openMailActions } from "../store/openMail";
+import useGet from "../hooks/useGet";
 
 const baseurl = BASE_URL;
 const getSentMailsUrl = `${baseurl}/mail/sent-mails`;
@@ -16,18 +17,12 @@ function SentMails() {
   const sentMails = useSelector((state) => state.sentMails.sentMails);
   const match = useRouteMatch()
 
-  useEffect(() => {
-    async function getSentMails() {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(getSentMailsUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      dispatch(sentMailsActions.getSentMails(response.data));
-    }
-    getSentMails();
-  }, []);
+  const data = useGet(getSentMailsUrl)
+  
+  // Check if data is not undefined before dispatching the action
+  if (data) {
+    dispatch(sentMailsActions.getSentMails(data));
+  }
 
   const sentMailsList = sentMails.map((mail, index) => {
     function openMail(){
