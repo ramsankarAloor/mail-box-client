@@ -28,6 +28,13 @@ function Inbox() {
         },
       });
       dispatch(mailsActions.getMails(response.data));
+      const unreadNum = response.data.reduce((acc, mail)=> {
+        if(!mail.read){
+          acc += 1
+        }
+        return acc
+      }, 0)
+      dispatch(mailsActions.setUnread(unreadNum))
     }
     getMails();
   }, []);

@@ -12,6 +12,7 @@ import OpenedMail from "../components/OpenedMail";
 
 function HomePage() {
   const dispatch = useDispatch();
+  const unreadNum = useSelector((state) => state.mails.unread);
   const match = useRouteMatch()
 
   function logoutHandler() {
@@ -29,7 +30,7 @@ function HomePage() {
           </div>
           <div className={styles["sections"]}>
             <NavLink to={`${match.path}/inbox`} className={styles["for-nav-link"]} activeClassName={styles.selected}>
-              Inbox
+              Inbox &nbsp;<span className="badge bg-primary">{unreadNum}</span>
             </NavLink>
           </div>
           <div className={styles["sections"]}>
