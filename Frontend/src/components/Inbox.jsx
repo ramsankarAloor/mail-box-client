@@ -21,24 +21,29 @@ function Inbox() {
   const history = useHistory();
 
   useEffect(() => {
-    async function getMails() {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(getMailsUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      dispatch(mailsActions.getMails(response.data));
-      const unreadNum = response.data.reduce((acc, mail) => {
-        if (!mail.read) {
-          acc += 1;
-        }
-        return acc;
-      }, 0);
-      dispatch(mailsActions.setUnread(unreadNum));
-    }
-    getMails();
-  }, [mails, dispatch]);
+    const intervalId = setInterval(() => {
+      async function getMails() {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(getMailsUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        dispatch(mailsActions.getMails(response.data));
+        const unreadNum = response.data.reduce((acc, mail) => {
+          if (!mail.read) {
+            acc += 1;
+          }
+          return acc;
+        }, 0);
+        dispatch(mailsActions.setUnread(unreadNum));
+      }
+      getMails();
+    }, 2000); // polling in every 2 seconds.
+
+    // Clear the interval on component unmount to prevent memory leaks
+    return () => clearInterval(intervalId);
+  }, [dispatch]); // Dependency array should not include `mails` to prevent infinite loop
 
   const mailsList = mails.map((mail, index) => {
     async function openMail() {
@@ -60,24 +65,24 @@ function Inbox() {
       history.push(`${match.url}/${mail.id}`);
     }
 
-    async function deleteMail(){
-      const token = localStorage.getItem("token")
+    async function deleteMail() {
+      const token = localStorage.getItem("token");
       try {
         await axios.delete(`${getMailsUrl}/${mail.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
+        });
       } catch (error) {
-        console.error(error)
-      } 
+        console.error(error);
+      }
 
-      dispatch(mailsActions.deleteMail(mail.id))
+      dispatch(mailsActions.deleteMail(mail.id));
     }
 
     return (
       <div key={index} className={classes["table-row"]}>
-        <div className={classes['text-body']} onClick={openMail}>
+        <div className={classes["text-body"]} onClick={openMail}>
           <div className={classes.w30}>
             <div className={classes["text-wrapper"]}>
               {!mail.read && <span className={classes["blue-dot"]}></span>}

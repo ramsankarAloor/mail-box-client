@@ -30,7 +30,7 @@ function HomePage() {
           </div>
           <div className={styles["sections"]}>
             <NavLink to={`${match.path}/inbox`} className={styles["for-nav-link"]} activeClassName={styles.selected}>
-              Inbox &nbsp;<span className="badge bg-primary">{unreadNum}</span>
+              Inbox &nbsp;{unreadNum>0 && <span className="badge bg-primary">{unreadNum}</span>}
             </NavLink>
           </div>
           <div className={styles["sections"]}>
