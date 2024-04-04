@@ -39,18 +39,18 @@ function Inbox() {
         dispatch(mailsActions.setUnread(unreadNum));
       }
       getMails();
-    }, 2000); 
+    }, 2000);
 
-    // Clear the interval on component unmount 
+    // Clear the interval on component unmount
     return () => clearInterval(intervalId);
-  }, [dispatch]); 
+  }, [dispatch]);
 
   const mailsList = mails.map((mail, index) => {
     async function openMail() {
       const token = localStorage.getItem("token");
       try {
         await axios.put(
-          `${getMailsUrl}/${mail.id}`,
+          `${getMailsUrl}/${mail.id}/read`,
           {},
           {
             headers: {
@@ -68,11 +68,15 @@ function Inbox() {
     async function deleteMail() {
       const token = localStorage.getItem("token");
       try {
-        await axios.delete(`${getMailsUrl}/${mail.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await axios.put(
+          `${getMailsUrl}/${mail.id}/delete`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       } catch (error) {
         console.error(error);
       }

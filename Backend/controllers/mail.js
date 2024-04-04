@@ -23,10 +23,10 @@ exports.getMails = async (req, res) => {
   try {
     const toId = req.userId;
     const mails = await Mail.findAll({
-      where: { toId },
+      where: { toId, receiverDeleted: false },
       include: [{ model: User, as: "from", attributes: ["email"] }],
       attributes: ["content", "subject", "read", "id"],
-      order: [["id", "DESC"]]
+      order: [["id", "DESC"]],
     });
     res.status(200).json(mails);
   } catch (error) {
@@ -41,7 +41,7 @@ exports.getSentMails = async (req, res) => {
       where: { fromId },
       include: [{ model: User, as: "to", attributes: ["email"] }],
       attributes: ["content", "subject", "id"],
-      order: [["id", "DESC"]]
+      order: [["id", "DESC"]],
     });
     res.status(200).json(sentMails);
   } catch (error) {
@@ -62,7 +62,7 @@ exports.readMail = async (req, res) => {
 exports.deleteMail = async (req, res) => {
   const id = req.params.id;
   try {
-    await Mail.destroy({ where: { id: id } });
+    await Mail.update({ receiverDeleted: true }, { where: { id: id } });
     res.status(200).json({ message: "mail deleted" });
   } catch (error) {
     res.status.json({ error: "server side error in deleting mail" });
