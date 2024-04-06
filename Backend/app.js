@@ -21,7 +21,7 @@ Mail.belongsTo(User, { foreignKey: 'fromId', as: 'from'});
 Mail.belongsTo(User, { foreignKey: 'toId', as: 'to'});
 
 sequelize
-  .sync({alter: true})
+  .sync()
   .then(() =>
     server.listen(4000, () => console.log("server running at port 4000"))
   )
